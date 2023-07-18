@@ -1,6 +1,7 @@
 import { Form, Button } from "bootstrap-4-react";
 import { submitTask } from "../handlers/form";
 import { useState } from "react";
+import { FaSave } from "react-icons/fa";
 
 export default function form({ todo, setTodo }) {
   const [title, setTitle] = useState("");
@@ -65,7 +66,7 @@ export default function form({ todo, setTodo }) {
           disabled={isButtonDisabled()}
           onClick={handleSubmit}
         >
-          Submit Task
+          <FaSave /> Save Todo
         </Button>
       </Form>
     </>
