@@ -19,10 +19,9 @@ export default function ListItem({ title, description, index }) {
             </div>
           </Col>
         </Row>
+        <hr />
+        <p className="description"> {description}</p>
       </Container>
-
-      <hr />
-      <p className="description"> {description}</p>
     </div>
   );
 }
