@@ -11,10 +11,10 @@ export default function ListItem({ title, description, index }) {
           </Col>
           <Col>
             <div className="d-flex justify-content-end">
-              <Button primary type="button" id="button" mt="2" mr="2">
+              <Button secondary type="button" id="button" mt="2" mr="2">
                 <FaEdit /> Edit
               </Button>
-              <Button primary type="button" id="button" mt="2">
+              <Button danger type="button" id="button" mt="2">
                 <FaTrash /> Delete
               </Button>
             </div>
