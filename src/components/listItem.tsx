@@ -1,4 +1,5 @@
-import { Container, Row, Col, Button, BDiv } from "bootstrap-4-react";
+import { Container, Row, Col, Button } from "bootstrap-4-react";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 export default function ListItem({ title, description, index }) {
   return (
@@ -11,10 +12,10 @@ export default function ListItem({ title, description, index }) {
           <Col>
             <div className="d-flex justify-content-end">
               <Button primary type="button" id="button" mt="2" mr="2">
-                Edit Task
+                <FaEdit /> Edit
               </Button>
               <Button primary type="button" id="button" mt="2">
-                Delete Task
+                <FaTrash /> Delete
               </Button>
             </div>
           </Col>
