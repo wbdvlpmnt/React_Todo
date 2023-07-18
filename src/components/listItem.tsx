@@ -1,9 +1,13 @@
 import { Container, Row, Col, Button } from "bootstrap-4-react";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { editTask } from "../handlers/list";
 
 export default function ListItem({ title, description, index }) {
+  async function handleEdit() {
+    editTask({ title, description, index });
+  }
   return (
-    <div className="card" key={index}>
+    <div className="card">
       <Container>
         <Row>
           <Col>
@@ -11,7 +15,14 @@ export default function ListItem({ title, description, index }) {
           </Col>
           <Col>
             <div className="d-flex justify-content-end">
-              <Button secondary type="button" id="button" mt="2" mr="2">
+              <Button
+                secondary
+                type="button"
+                id="button"
+                mt="2"
+                mr="2"
+                onClick={handleEdit}
+              >
                 <FaEdit /> Edit
               </Button>
               <Button danger type="button" id="button" mt="2">
