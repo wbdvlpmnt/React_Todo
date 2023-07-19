@@ -1,10 +1,18 @@
 import { Todo } from "../types/types";
 import ListItem from "./listItem";
 
-export default function list({ todo }) {
-  const items = todo.map((to: Todo, index: number) => {
+export default function list({ todo, setTodo, setIdToEdit }) {
+  const items = todo.map((to: Todo) => {
     return (
-      <ListItem title={to.title} description={to.description} index={index} />
+      <ListItem
+        title={to.title}
+        description={to.description}
+        index={to.id}
+        key={to.id}
+        todo={todo}
+        setTodo={setTodo}
+        setIdToEdit={setIdToEdit}
+      />
     );
   });
   return (
