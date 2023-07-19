@@ -1,11 +1,25 @@
 import { Form, Button } from "bootstrap-4-react";
 import { submitTask } from "../handlers/form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaSave } from "react-icons/fa";
 
-export default function form({ todo, setTodo }) {
+export default function form({ todo, setTodo, idToEdit, setIdToEdit }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if (idToEdit) {
+      console.log({ idToEdit });
+      // filter todo by id
+      const filteredItem = todo.filter(function (el) {
+        return el.id === idToEdit;
+      });
+      // set title and description
+      const item = filteredItem[0];
+      setTitle(item.title);
+      setDescription(item.description);
+    }
+  }, [idToEdit]);
 
   function clearState() {
     setTitle("");
@@ -21,7 +35,7 @@ export default function form({ todo, setTodo }) {
   }
 
   async function handleSubmit() {
-    await submitTask(title, description, todo, setTodo);
+    await submitTask(idToEdit, title, description, todo, setTodo, setIdToEdit);
     clearState();
   }
 

@@ -1,7 +1,6 @@
-export async function editTask(itemToEdit: {
-  title: String;
-  description: String;
-  index: String;
-}) {
-  console.log("index to edit is", itemToEdit.index);
+export async function editTask(
+  index: String,
+  setIdToEdit: React.Dispatch<React.SetStateAction<String>>
+) {
+  setIdToEdit(index);
 }

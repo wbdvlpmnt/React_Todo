@@ -2,9 +2,9 @@ import { Container, Row, Col, Button } from "bootstrap-4-react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { editTask } from "../handlers/list";
 
-export default function ListItem({ title, description, index }) {
+export default function ListItem({ title, description, index, setIdToEdit }) {
   async function handleEdit() {
-    editTask({ title, description, index });
+    editTask(index, setIdToEdit);
   }
   return (
     <div className="card">

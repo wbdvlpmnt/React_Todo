@@ -1,15 +1,15 @@
 import { Todo } from "../types/types";
 import ListItem from "./listItem";
 
-export default function list({ todo }) {
+export default function list({ todo, setIdToEdit }) {
   const items = todo.map((to: Todo) => {
-    const uniqueId = crypto.randomUUID();
     return (
       <ListItem
         title={to.title}
         description={to.description}
-        index={uniqueId}
-        key={uniqueId}
+        index={to.id}
+        key={to.id}
+        setIdToEdit={setIdToEdit}
       />
     );
   });
