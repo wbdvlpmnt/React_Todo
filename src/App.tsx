@@ -24,7 +24,7 @@ function App() {
         </Row>
         <div style={{ marginTop: "1em" }}></div>
         <Row>
-          <List todo={todo} setIdToEdit={setIdToEdit} />
+          <List todo={todo} setTodo={setTodo} setIdToEdit={setIdToEdit} />
         </Row>
       </Container>
     </>

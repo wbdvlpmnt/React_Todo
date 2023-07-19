@@ -1,11 +1,23 @@
 import { Container, Row, Col, Button } from "bootstrap-4-react";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { editTask } from "../handlers/list";
+import { editTask, deleteTask } from "../handlers/list";
 
-export default function ListItem({ title, description, index, setIdToEdit }) {
+export default function ListItem({
+  title,
+  description,
+  index,
+  todo,
+  setTodo,
+  setIdToEdit,
+}) {
   async function handleEdit() {
     editTask(index, setIdToEdit);
   }
+
+  async function handleDelete() {
+    deleteTask(index, todo, setTodo);
+  }
+
   return (
     <div className="card">
       <Container>
@@ -25,7 +37,13 @@ export default function ListItem({ title, description, index, setIdToEdit }) {
               >
                 <FaEdit /> Edit
               </Button>
-              <Button danger type="button" id="button" mt="2">
+              <Button
+                danger
+                type="button"
+                id="button"
+                mt="2"
+                onClick={handleDelete}
+              >
                 <FaTrash /> Delete
               </Button>
             </div>

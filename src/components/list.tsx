@@ -1,7 +1,7 @@
 import { Todo } from "../types/types";
 import ListItem from "./listItem";
 
-export default function list({ todo, setIdToEdit }) {
+export default function list({ todo, setTodo, setIdToEdit }) {
   const items = todo.map((to: Todo) => {
     return (
       <ListItem
@@ -9,6 +9,8 @@ export default function list({ todo, setIdToEdit }) {
         description={to.description}
         index={to.id}
         key={to.id}
+        todo={todo}
+        setTodo={setTodo}
         setIdToEdit={setIdToEdit}
       />
     );
