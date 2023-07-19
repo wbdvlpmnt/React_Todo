@@ -141,3 +141,70 @@ describe("Renders form correctly", async () => {
     expect(mockSetState).not.toHaveBeenCalled();
   });
 });
+
+describe("Renders form correctly", async () => {
+  afterEach(() => {
+    cleanup();
+    vi.restoreAllMocks();
+  });
+
+  beforeEach(() => {
+    render(
+      <Form
+        todo={[
+          { id: "123", title: "test_title", description: "test_description" },
+        ]}
+        setTodo={() => {}}
+        idToEdit={"123"}
+        setIdToEdit={() => {}}
+      />
+    );
+  });
+
+  it("should populate form fields when editing an item", async () => {
+    const titleInput = await screen.findByTestId("title");
+    const descriptionText = await screen.findByTestId("description");
+
+    expect(titleInput).toHaveValue("test_title");
+    expect(descriptionText).toHaveValue("test_description");
+  });
+
+  it("should call submit task with id to edit when editing an item", async () => {
+    const title = "edit_title";
+    const description = "edit_description";
+    const todo = [
+      { id: "123", title: "test_title", description: "test_description" },
+    ];
+    const mockSetState = vi.fn();
+    const mockSetIdToEdit = vi.fn();
+
+    vi.mock("react", async () => {
+      const actual = (await vi.importActual("react")) as any;
+      return {
+        ...actual,
+        setState: vi.fn(),
+      };
+    });
+
+    const idToEdit = "123";
+
+    handler.submitTask(
+      idToEdit,
+      title,
+      description,
+      todo,
+      mockSetState,
+      mockSetIdToEdit
+    );
+
+    expect(mockSetState).toHaveBeenLastCalledWith(
+      expect.arrayContaining([
+        {
+          id: "123",
+          title: "edit_title",
+          description: "edit_description",
+        },
+      ])
+    );
+  });
+});

@@ -9,7 +9,6 @@ export default function form({ todo, setTodo, idToEdit, setIdToEdit }) {
 
   useEffect(() => {
     if (idToEdit) {
-      console.log({ idToEdit });
       // filter todo by id
       const filteredItem = todo.filter(function (el) {
         return el.id === idToEdit;
