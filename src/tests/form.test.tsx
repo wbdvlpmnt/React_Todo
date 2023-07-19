@@ -15,11 +15,13 @@ describe("Renders form correctly", async () => {
     vi.restoreAllMocks();
   });
 
-  it("Should render the title input", async () => {
+  beforeEach(() => {
     render(
       <Form todo={[]} setTodo={() => {}} idToEdit={""} setIdToEdit={() => {}} />
     );
+  });
 
+  it("Should render the title input", async () => {
     const label = await screen.findByLabelText("Title");
     const input = await screen.findByPlaceholderText("Enter a todo item");
 
@@ -28,10 +30,6 @@ describe("Renders form correctly", async () => {
   });
 
   it("Should render the description input", async () => {
-    render(
-      <Form todo={[]} setTodo={() => {}} idToEdit={""} setIdToEdit={() => {}} />
-    );
-
     const label = await screen.findByLabelText("Description");
     const input = await screen.findByTestId("description");
 
@@ -40,10 +38,6 @@ describe("Renders form correctly", async () => {
   });
 
   it("Should render the submit button", async () => {
-    render(
-      <Form todo={[]} setTodo={() => {}} idToEdit={""} setIdToEdit={() => {}} />
-    );
-
     const button = await screen.findByRole("button", { name: "Save Todo" });
 
     expect(button).not.toBeNull();
@@ -53,9 +47,6 @@ describe("Renders form correctly", async () => {
     const submitTaskSpy = vi.spyOn(handler, "submitTask");
     const setTodo = () => {};
     const setIdToEdit = () => {};
-    render(
-      <Form todo={[]} setTodo={setTodo} idToEdit={""} setIdToEdit={() => {}} />
-    );
 
     const user = userEvent.setup();
     const titleInput = await screen.findByPlaceholderText("Enter a todo item");
@@ -107,47 +98,46 @@ describe("Renders form correctly", async () => {
       { title, description, id },
     ]);
   });
-});
-
-it("Should disable button if form field is empty", async () => {
-  render(
-    <Form todo={[]} setTodo={() => {}} idToEdit={""} setIdToEdit={() => {}} />
-  );
-
-  const button = await screen.findByRole("button", { name: "Save Todo" });
-  expect(button.className).toContain("disabled");
-});
-
-it("Should enable button if form fields are not empty", async () => {
-  render(
-    <Form todo={[]} setTodo={() => {}} idToEdit={""} setIdToEdit={() => {}} />
-  );
-
-  const user = userEvent.setup();
-  const titleInput = await screen.findByPlaceholderText("Enter a todo item");
-  const descriptionText = await screen.findByTestId("description");
-  const button = await screen.findByRole("button", { name: "Save Todo" });
-
-  await user.type(titleInput, "test_input");
-  await user.type(descriptionText, "test_text");
-
-  expect(button.className).not.toContain("disabled");
-});
-
-it("Should not update state with title and description if fields are blank", async () => {
-  const title = "";
-  const description = "";
-  const todo = [];
-  const mockSetState = vi.fn();
-
-  vi.mock("react", async () => {
-    const actual = (await vi.importActual("react")) as any;
-    return {
-      ...actual,
-      setState: vi.fn(),
-    };
+  it("Should disable button if form field is empty", async () => {
+    const button = await screen.findByRole("button", { name: "Save Todo" });
+    expect(button.className).toContain("disabled");
   });
 
-  handler.submitTask(title, description, todo, mockSetState);
-  expect(mockSetState).not.toHaveBeenCalled();
+  it("Should enable button if form fields are not empty", async () => {
+    const user = userEvent.setup();
+    const titleInput = await screen.findByPlaceholderText("Enter a todo item");
+    const descriptionText = await screen.findByTestId("description");
+    const button = await screen.findByRole("button", { name: "Save Todo" });
+
+    await user.type(titleInput, "test_input");
+    await user.type(descriptionText, "test_text");
+
+    expect(button.className).not.toContain("disabled");
+  });
+
+  it("Should not update state with title and description if fields are blank", async () => {
+    const title = "";
+    const description = "";
+    const todo = [];
+    const mockSetState = vi.fn();
+    const mockSetIdToEdit = vi.fn();
+
+    vi.mock("react", async () => {
+      const actual = (await vi.importActual("react")) as any;
+      return {
+        ...actual,
+        setState: vi.fn(),
+      };
+    });
+
+    handler.submitTask(
+      "",
+      title,
+      description,
+      todo,
+      mockSetState,
+      mockSetIdToEdit
+    );
+    expect(mockSetState).not.toHaveBeenCalled();
+  });
 });
