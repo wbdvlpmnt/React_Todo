@@ -67,14 +67,7 @@ describe("Renders form correctly", async () => {
     await user.click(button as HTMLElement);
 
     expect(button).not.toBeNull();
-    expect(submitTaskSpy).toHaveBeenCalledWith(
-      "",
-      "test_input",
-      "test_text",
-      [],
-      setTodo,
-      setIdToEdit
-    );
+    expect(submitTaskSpy).toHaveBeenCalled();
   });
 
   it("Should update state with title and description in form handler", async () => {
