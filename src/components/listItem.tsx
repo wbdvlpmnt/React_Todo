@@ -30,6 +30,7 @@ export default function ListItem({
               <Button
                 secondary
                 type="button"
+                data-testid="edit"
                 id="button"
                 mt="2"
                 mr="2"
@@ -40,6 +41,7 @@ export default function ListItem({
               <Button
                 danger
                 type="button"
+                data-testid="delete"
                 id="button"
                 mt="2"
                 onClick={handleDelete}
