@@ -36,7 +36,7 @@ export async function putTask(url: string, data: any) {
   }
 }
 
-export async function deleteTask(url: string) {
+export async function deleteItem(url: string) {
   let options = {
     method: "DELETE",
     url: url,
