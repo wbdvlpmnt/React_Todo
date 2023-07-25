@@ -4,7 +4,7 @@ import { render, screen, cleanup } from "@testing-library/react";
 import Form from "../components/form";
 import userEvent from "@testing-library/user-event";
 import * as handler from "../handlers/form";
-import crypto from "crypto";
+import * as helper from "../handlers/updateUi";
 
 // To Test
 
@@ -61,31 +61,16 @@ describe("Renders form correctly", async () => {
     expect(submitTaskSpy).toHaveBeenCalled();
   });
 
-  it("Should update state with title and description in form handler", async () => {
+  it("Should save with title and description in form handler", async () => {
     const title = "test_title";
     const description = "test_description";
     const todo = [];
     const mockSetState = vi.fn();
     const mockSetIdToEdit = vi.fn();
+    const saveItemToDbSpy = vi.spyOn(helper, "saveItemToDb");
 
-    vi.mock("react", async () => {
-      const actual = (await vi.importActual("react")) as any;
-      return {
-        ...actual,
-        setState: vi.fn(),
-      };
-    });
-
-    const abc = "123";
-    const id = "123-123-123-123-123";
-    const createHashMock = vi
-      .spyOn(crypto, "randomUUID")
-      .mockImplementationOnce(() => {
-        return `${abc}-${abc}-${abc}-${abc}-${abc}` as "`${string}-${string}-${string}-${string}-${string}`";
-      });
-
-    handler.submitTask(
-      "",
+    await handler.submitTask(
+      NaN,
       title,
       description,
       todo,
@@ -93,10 +78,7 @@ describe("Renders form correctly", async () => {
       mockSetIdToEdit
     );
 
-    expect(mockSetState).toHaveBeenLastCalledWith([
-      ...todo,
-      { title, description, id },
-    ]);
+    expect(saveItemToDbSpy).toHaveBeenCalled();
   });
   it("Should disable button if form field is empty", async () => {
     const button = await screen.findByRole("button", { name: "Save Todo" });
@@ -131,7 +113,7 @@ describe("Renders form correctly", async () => {
     });
 
     handler.submitTask(
-      "",
+      NaN,
       title,
       description,
       todo,
@@ -186,7 +168,7 @@ describe("Renders form correctly", async () => {
       };
     });
 
-    const idToEdit = "123";
+    const idToEdit = 1;
 
     handler.submitTask(
       idToEdit,
