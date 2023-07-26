@@ -47,16 +47,13 @@ describe("Renders form correctly", async () => {
     const submitTaskSpy = vi.spyOn(handler, "submitTask").mockResolvedValue();
     const setTodo = () => {};
     const setIdToEdit = () => {};
-
     const user = userEvent.setup();
     const titleInput = await screen.findByPlaceholderText("Enter a todo item");
     const descriptionText = await screen.findByTestId("description");
     const button = await screen.findByRole("button", { name: "Save Todo" });
-
     await user.type(titleInput, "test_input");
     await user.type(descriptionText, "test_text");
     await user.click(button as HTMLElement);
-
     expect(button).not.toBeNull();
     expect(submitTaskSpy).toHaveBeenCalled();
   });
@@ -70,7 +67,6 @@ describe("Renders form correctly", async () => {
     const saveItemToDbSpy = vi
       .spyOn(helper, "saveItemToDb")
       .mockResolvedValue();
-
     await handler.submitTask(
       NaN,
       title,
@@ -79,7 +75,6 @@ describe("Renders form correctly", async () => {
       mockSetState,
       mockSetIdToEdit
     );
-
     expect(saveItemToDbSpy).toHaveBeenCalled();
   });
   it("Should disable button if form field is empty", async () => {
@@ -161,7 +156,9 @@ describe("Renders form correctly", async () => {
     ];
     const mockSetState = vi.fn();
     const mockSetIdToEdit = vi.fn();
-    const editItemInDbSpy = vi.spyOn(helper, "editItemInDb");
+    const editItemInDbSpy = vi
+      .spyOn(helper, "editItemInDb")
+      .mockResolvedValue();
 
     vi.mock("react", async () => {
       const actual = (await vi.importActual("react")) as any;
