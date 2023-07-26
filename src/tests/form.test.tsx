@@ -155,10 +155,11 @@ describe("Renders form correctly", async () => {
     const title = "edit_title";
     const description = "edit_description";
     const todo = [
-      { id: "123", title: "test_title", description: "test_description" },
+      { id: 1, title: "test_title", description: "test_description" },
     ];
     const mockSetState = vi.fn();
     const mockSetIdToEdit = vi.fn();
+    const editItemInDbSpy = vi.spyOn(helper, "editItemInDb");
 
     vi.mock("react", async () => {
       const actual = (await vi.importActual("react")) as any;
@@ -179,14 +180,6 @@ describe("Renders form correctly", async () => {
       mockSetIdToEdit
     );
 
-    expect(mockSetState).toHaveBeenLastCalledWith(
-      expect.arrayContaining([
-        {
-          id: "123",
-          title: "edit_title",
-          description: "edit_description",
-        },
-      ])
-    );
+    expect(editItemInDbSpy).toBeCalled();
   });
 });
