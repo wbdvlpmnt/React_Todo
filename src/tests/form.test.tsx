@@ -179,6 +179,11 @@ describe("Renders form correctly", async () => {
       mockSetIdToEdit
     );
 
-    expect(editItemInDbSpy).toBeCalled();
+    expect(editItemInDbSpy).toBeCalledWith(
+      { title, description, id: idToEdit },
+      [{ title, description, id: idToEdit }],
+      mockSetState,
+      mockSetIdToEdit
+    );
   });
 });

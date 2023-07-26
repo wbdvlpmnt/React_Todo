@@ -77,6 +77,12 @@ describe("Tests list item handlers", async () => {
       mockSetState
     );
     expect(deleteItemSpy).toBeCalled();
-    expect(mockSetState).toBeCalled();
+    expect(mockSetState).toBeCalledWith([
+      {
+        id: 2,
+        title: "test2",
+        description: "test2",
+      },
+    ]);
   });
 });
