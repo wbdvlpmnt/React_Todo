@@ -29,7 +29,7 @@ describe("Renders list correctly", async () => {
         description: "desc3",
       },
     ];
-    render(<List todo={todo} setIdToEdit={undefined} />);
+    render(<List todo={todo} setIdToEdit={() => {}} setTodo={() => {}} />);
 
     const items = (await screen.findByTestId("items")).innerHTML;
     expect(items).not.toBeNull;

@@ -38,7 +38,7 @@ describe("list item component tests", async () => {
 
   it("Should call the delete handler on delete", async () => {
     const user = userEvent.setup();
-    const deleteTaskSpy = vi.spyOn(handler, "deleteTask");
+    const deleteTaskSpy = vi.spyOn(handler, "deleteTask").mockResolvedValue();
 
     const deleteButton = await screen.findByRole("button", {
       name: "Delete",
@@ -60,7 +60,7 @@ describe("Tests list item handlers", async () => {
     const deleteItemSpy = vi
       .spyOn(services, "deleteItem")
       .mockResolvedValue({ status: 200 });
-    handler.deleteTask(
+    await handler.deleteTask(
       1,
       [
         {
@@ -77,5 +77,6 @@ describe("Tests list item handlers", async () => {
       mockSetState
     );
     expect(deleteItemSpy).toBeCalled();
+    expect(mockSetState).toBeCalled();
   });
 });

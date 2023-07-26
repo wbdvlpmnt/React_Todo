@@ -17,6 +17,7 @@ export async function deleteTask(
   const del = await deleteItem(`${baseURL}/delete/${index}`);
 
   if (del.status === 200) {
+    console.log("hello");
     var filtered = todo.filter(function (el) {
       return el.id != index;
     });

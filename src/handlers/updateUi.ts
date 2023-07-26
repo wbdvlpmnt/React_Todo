@@ -23,7 +23,6 @@ export async function saveItemToDb(
   todo: Todo[],
   setTodo: React.Dispatch<React.SetStateAction<Todo[]>>
 ) {
-  console.log("called");
   // send to service / db
   const saveItem = await postNewTask(`${baseURL}/item`, todoObj);
   // if successfull update UI

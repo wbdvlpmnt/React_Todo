@@ -44,7 +44,7 @@ describe("Renders form correctly", async () => {
   });
 
   it("Should call submitTask with form data on button click", async () => {
-    const submitTaskSpy = vi.spyOn(handler, "submitTask");
+    const submitTaskSpy = vi.spyOn(handler, "submitTask").mockResolvedValue();
     const setTodo = () => {};
     const setIdToEdit = () => {};
 
@@ -67,7 +67,9 @@ describe("Renders form correctly", async () => {
     const todo = [];
     const mockSetState = vi.fn();
     const mockSetIdToEdit = vi.fn();
-    const saveItemToDbSpy = vi.spyOn(helper, "saveItemToDb");
+    const saveItemToDbSpy = vi
+      .spyOn(helper, "saveItemToDb")
+      .mockResolvedValue();
 
     await handler.submitTask(
       NaN,
