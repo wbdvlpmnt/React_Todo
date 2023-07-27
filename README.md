@@ -8,6 +8,9 @@ The purpose of this project is to create a simple application to learn the basic
 
 To create a fullstack application that has some helpful examples of unit testing.
 
+<img width="800" alt="Screenshot 2023-07-27 at 1 38 25 PM" src="https://github.com/wbdvlpmnt/React_Todo/assets/139825457/82a51847-243b-4267-bd23-6b2aeb1705d9">
+
+
 # Current Test Coverage
 
 | File            | % Stmts   | % Branch   | % Funcs   | % Lines   | Uncovered Line #s   |
