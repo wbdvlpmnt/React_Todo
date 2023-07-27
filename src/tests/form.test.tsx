@@ -4,7 +4,7 @@ import { render, screen, cleanup } from "@testing-library/react";
 import Form from "../components/form";
 import userEvent from "@testing-library/user-event";
 import * as handler from "../handlers/form";
-import crypto from "crypto";
+import * as helper from "../handlers/updateUi";
 
 // To Test
 
@@ -44,59 +44,38 @@ describe("Renders form correctly", async () => {
   });
 
   it("Should call submitTask with form data on button click", async () => {
-    const submitTaskSpy = vi.spyOn(handler, "submitTask");
+    const submitTaskSpy = vi.spyOn(handler, "submitTask").mockResolvedValue();
     const setTodo = () => {};
     const setIdToEdit = () => {};
-
     const user = userEvent.setup();
     const titleInput = await screen.findByPlaceholderText("Enter a todo item");
     const descriptionText = await screen.findByTestId("description");
     const button = await screen.findByRole("button", { name: "Save Todo" });
-
     await user.type(titleInput, "test_input");
     await user.type(descriptionText, "test_text");
     await user.click(button as HTMLElement);
-
     expect(button).not.toBeNull();
     expect(submitTaskSpy).toHaveBeenCalled();
   });
 
-  it("Should update state with title and description in form handler", async () => {
+  it("Should save with title and description in form handler", async () => {
     const title = "test_title";
     const description = "test_description";
     const todo = [];
     const mockSetState = vi.fn();
     const mockSetIdToEdit = vi.fn();
-
-    vi.mock("react", async () => {
-      const actual = (await vi.importActual("react")) as any;
-      return {
-        ...actual,
-        setState: vi.fn(),
-      };
-    });
-
-    const abc = "123";
-    const id = "123-123-123-123-123";
-    const createHashMock = vi
-      .spyOn(crypto, "randomUUID")
-      .mockImplementationOnce(() => {
-        return `${abc}-${abc}-${abc}-${abc}-${abc}` as "`${string}-${string}-${string}-${string}-${string}`";
-      });
-
-    handler.submitTask(
-      "",
+    const saveItemToDbSpy = vi
+      .spyOn(helper, "saveItemToDb")
+      .mockResolvedValue();
+    await handler.submitTask(
+      NaN,
       title,
       description,
       todo,
       mockSetState,
       mockSetIdToEdit
     );
-
-    expect(mockSetState).toHaveBeenLastCalledWith([
-      ...todo,
-      { title, description, id },
-    ]);
+    expect(saveItemToDbSpy).toHaveBeenCalled();
   });
   it("Should disable button if form field is empty", async () => {
     const button = await screen.findByRole("button", { name: "Save Todo" });
@@ -131,7 +110,7 @@ describe("Renders form correctly", async () => {
     });
 
     handler.submitTask(
-      "",
+      NaN,
       title,
       description,
       todo,
@@ -173,10 +152,13 @@ describe("Renders form correctly", async () => {
     const title = "edit_title";
     const description = "edit_description";
     const todo = [
-      { id: "123", title: "test_title", description: "test_description" },
+      { id: 1, title: "test_title", description: "test_description" },
     ];
     const mockSetState = vi.fn();
     const mockSetIdToEdit = vi.fn();
+    const editItemInDbSpy = vi
+      .spyOn(helper, "editItemInDb")
+      .mockResolvedValue();
 
     vi.mock("react", async () => {
       const actual = (await vi.importActual("react")) as any;
@@ -186,7 +168,7 @@ describe("Renders form correctly", async () => {
       };
     });
 
-    const idToEdit = "123";
+    const idToEdit = 1;
 
     handler.submitTask(
       idToEdit,
@@ -197,14 +179,11 @@ describe("Renders form correctly", async () => {
       mockSetIdToEdit
     );
 
-    expect(mockSetState).toHaveBeenLastCalledWith(
-      expect.arrayContaining([
-        {
-          id: "123",
-          title: "edit_title",
-          description: "edit_description",
-        },
-      ])
+    expect(editItemInDbSpy).toBeCalledWith(
+      { title, description, id: idToEdit },
+      [{ title, description, id: idToEdit }],
+      mockSetState,
+      mockSetIdToEdit
     );
   });
 });

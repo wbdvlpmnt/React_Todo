@@ -1,20 +1,27 @@
 import { Todo } from "../types/types";
+import { deleteItem } from "../services/service";
+const baseURL = "http://localhost:3000/todoapi";
 
 export async function editTask(
-  index: String,
-  setIdToEdit: React.Dispatch<React.SetStateAction<String>>
+  index: number,
+  setIdToEdit: React.Dispatch<React.SetStateAction<number>>
 ) {
   setIdToEdit(index);
 }
 
 export async function deleteTask(
-  index: String,
+  index: number,
   todo: Todo[],
   setTodo: React.Dispatch<React.SetStateAction<Todo[]>>
 ) {
-  var filtered = todo.filter(function (el) {
-    return el.id != index;
-  });
+  const del = await deleteItem(`${baseURL}/delete/${index}`);
 
-  setTodo(filtered);
+  if (del.status === 200) {
+    var filtered = todo.filter(function (el) {
+      return el.id != index;
+    });
+    setTodo(filtered);
+  }
+
+  return;
 }

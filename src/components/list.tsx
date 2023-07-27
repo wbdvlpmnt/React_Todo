@@ -1,7 +1,10 @@
+import { useEffect } from "react";
 import { Todo } from "../types/types";
 import ListItem from "./listItem";
 
 export default function list({ todo, setTodo, setIdToEdit }) {
+  // useEffect(() => {}, [todo]);
+
   const items = todo.map((to: Todo) => {
     return (
       <ListItem
