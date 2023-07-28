@@ -15,18 +15,23 @@ To create a fullstack application that has some helpful examples of unit testing
 Structure the app in a way where you can separate the logic and service calls out of your components. Keeping the components as simple as possible will make them easier to test. Extracting logic and services from components allows you to test the logic in isolation and reduces the coupling between the component and the logic.
 
 App Structure Example
+
 <img width="215" alt="Screenshot 2023-07-28 at 10 02 53 AM" src="https://github.com/wbdvlpmnt/React_Todo/assets/139825457/6cde1a87-71cd-40c9-bc2c-5a205cf22a5c">
 
 Simplify Components Example
+
 <img width="788" alt="Screenshot 2023-07-28 at 10 03 56 AM" src="https://github.com/wbdvlpmnt/React_Todo/assets/139825457/0ee0b8d4-f387-4c06-8eed-e566515ea48d">
 
 Extract Logic Example
+
 <img width="708" alt="Screenshot 2023-07-28 at 10 04 25 AM" src="https://github.com/wbdvlpmnt/React_Todo/assets/139825457/5f4400c5-0199-4a94-b191-94b4b9d019e6">
 
 Extract Services Example
+
 <img width="645" alt="Screenshot 2023-07-28 at 10 04 42 AM" src="https://github.com/wbdvlpmnt/React_Todo/assets/139825457/1c20735f-a532-4f45-a5a2-38b252875145">
 
 When testing the components bring in the logic and services, and spy or mock them in the unit tests. Remember to test the logic and services as well in their own tests. These are unit tests we want to test each unit independently.
+
 <img width="789" alt="Screenshot 2023-07-28 at 10 05 07 AM" src="https://github.com/wbdvlpmnt/React_Todo/assets/139825457/faf3bc3d-466b-4ecc-b087-ada651f295f7">
 
 
